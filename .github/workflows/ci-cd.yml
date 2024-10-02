@@ -5,7 +5,7 @@ on:
     branches: [ "NOK-003/Deployment" ]
 
 env:
-  REGISTRY: 583.dkr.ecr.eu-west-2.amazonaws.com/hello-whale
+  REGISTRY: 583.dkr.ecr.eu-west-2.amazonaws.com/hello-whale #need to update this
   IMAGE_NAME: flask-app
 
 jobs:
