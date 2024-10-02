@@ -5,7 +5,7 @@ on:
     branches: [ "NOK-003/Deployment" ]
 
 env:
-  REGISTRY: 586794487233.dkr.ecr.eu-west-2.amazonaws.com/hello-whale
+  REGISTRY: 583.dkr.ecr.eu-west-2.amazonaws.com/hello-whale
   IMAGE_NAME: flask-app
 
 jobs:
@@ -37,10 +37,6 @@ jobs:
       # Step 4: Build the Docker image
       - name: Build the Docker image
         run: |
-          docker buildx build --platform linux/amd64 -t $IMAGE_NAME:$GITHUB_SHA .
-          docker tag $IMAGE_NAME:$GITHUB_SHA $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
+          docker buildx build --platform linux/amd64 -t $REGISTRY/$IMAGE_NAME:$GITHUB_SHA -f app/Dockerfile app --push
 
-      # Step 5: Push the Docker image with the Git SHA tag
-      - name: Push Docker image with commit SHA
-        run: |
-          docker push $REGISTRY/$IMAGE_NAME:$GITHUB_SHA
+      # Note: No need for a separate push step since it's already handled in the build step.
