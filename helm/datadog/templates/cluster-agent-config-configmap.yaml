@@ -1,0 +1,44 @@
+{{- if .Values.clusterAgent.datadog_cluster_yaml }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "datadog.fullname" . }}-cluster-agent-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: "{{ template "datadog.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+{{ include "datadog.labels" . | indent 4 }}
+  annotations:
+    checksum/clusteragent-config: {{ tpl (toYaml .Values.clusterAgent.datadog_cluster_yaml) . | sha256sum }}
+data:
+  datadog-cluster.yaml: |
+    apm_config:
+      apm_non_local_traffic: true
+    jmx_use_container_support: true
+    logs_enabled: true
+    logs:
+      - type: file
+        path: /app/logs/prime_number.log
+        service: prime_number_app
+        source: python
+      - type: container
+        path: /var/log/containers/*.log
+        service: kube-logs
+        source: kubernetes
+    listeners:
+      - name: docker
+    config_providers:
+      - name: docker
+        polling: true
+    logs_config:
+      container_collect_all: true
+    process_config:
+      process_collection:
+        enabled: true
+    system_probe_config:
+      enabled: true
+    site: datadoghq.eu
+{{ tpl (toYaml .Values.clusterAgent.datadog_cluster_yaml) . | indent 4 }}
+{{- end }}

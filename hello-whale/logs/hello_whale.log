@@ -1,0 +1,20 @@
+2024-09-28 09:51:00,676 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 09:51:00,678 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 09:58:17,731 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 09:58:17,732 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 17:37:00,208 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 17:37:00,211 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 17:47:04,302 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 17:47:04,304 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 18:19:12,481 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 18:19:12,482 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 18:27:52,596 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 18:27:52,598 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 18:27:58,917 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 18:27:58,918 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 18:38:06,446 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 18:38:06,448 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 18:38:11,855 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 18:38:11,856 - app - DEBUG - Debug log: This is a debug message from hello_whale.
+2024-09-28 18:38:13,590 - app - INFO - Info log: Accessed the hello_whale route.
+2024-09-28 18:38:13,590 - app - DEBUG - Debug log: This is a debug message from hello_whale.

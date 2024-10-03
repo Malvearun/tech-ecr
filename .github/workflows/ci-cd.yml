@@ -1,12 +1,15 @@
-name: Docker Build and Publish
+name: Docker Build, SonarQube Scan, and Publish
 
 on:
   push:
     branches: [ "NOK-003/Deployment" ]
 
 env:
-  REGISTRY: 583.dkr.ecr.eu-west-2.amazonaws.com/hello-whale #need to update this
+  REGISTRY: 583.dkr.ecr.eu-west-2.amazonaws.com/hello-whale  # Update this as needed
   IMAGE_NAME: flask-app
+  SONAR_PROJECT_KEY: flask-app
+  SONAR_HOST_URL: http://your-sonarqube-server.com
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Make sure to add SONAR_TOKEN as a GitHub Secret
 
 jobs:
   build-and-push:
@@ -15,13 +18,24 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
+
+      # Step 1: Run SonarQube scan
+      - name: SonarQube Scan
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=$SONAR_PROJECT_KEY \
+            -Dsonar.sources=./app \
+            -Dsonar.host.url=$SONAR_HOST_URL \
+            -Dsonar.login=$SONAR_TOKEN
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Inject SonarQube token from GitHub Secrets
 
       # Step 2: Set up Docker Buildx
       - name: Set up Docker Buildx
@@ -34,9 +48,7 @@ jobs:
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v1
 
-      # Step 4: Build the Docker image
+      # Step 4: Build the Docker image and push
       - name: Build the Docker image
         run: |
           docker buildx build --platform linux/amd64 -t $REGISTRY/$IMAGE_NAME:$GITHUB_SHA -f app/Dockerfile app --push
-
-      # Note: No need for a separate push step since it's already handled in the build step.
